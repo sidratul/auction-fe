@@ -1,6 +1,6 @@
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import UseSWR from 'swr';
-import { AuthToken } from './auth/type';
+import { AuthToken } from './auth/types';
 
 export const setDefaultToken = (token: AuthToken) => {
   if (!token) {
@@ -20,3 +20,6 @@ export const get = <T,E=unknown>(url: string) => {
   });
 }
 
+export const post = <T, D=unknown>(url: string, body?: D) => {
+  return axios.post<T, AxiosResponse<T>, D>(url, body);
+}

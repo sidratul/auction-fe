@@ -3,7 +3,7 @@ import React, { useState, createContext, ReactNode, useEffect, useContext } from
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getCookie, setCookie, removeCookie } from 'typescript-cookie';
-import { AuthToken, LoginResponse } from '@/services/auth/type';
+import { AuthToken, LoginResponse } from '@/services/auth/types';
 import { User } from '@/services/user';
 import { setDefaultToken } from '@/services/api';
 

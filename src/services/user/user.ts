@@ -1,7 +1,7 @@
 import getConfig from 'next/config';
 import * as api from '../api';
-import { ErrorResponse } from '../type';
-import { User } from './type';
+import { ErrorResponse } from '../types';
+import { User } from './types';
 
 const { publicRuntimeConfig = {} } = getConfig();
 const { apiUrl } = publicRuntimeConfig;
