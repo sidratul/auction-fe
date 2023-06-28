@@ -3,19 +3,19 @@ import { Button } from '../Button';
 import Link from 'next/link';
 
 
-const menus = [...Array(5)].map((_, i) => {
-  return {
-    label: `Menu ${i+1}`,
-    href: '/',
+const menus = [
+  {
+    label: 'Deposit',
+    href: '/deposit'
   }
-});
+];
 
 export const Navigation = () => {
   return (
     <div className="grid h-screen bg-cyan-900 text-white px-[24px] py-[40px] overflow-auto content-between">
       <div className="grid gap-6">
         {menus.map(menu => (
-          <Link key={menu.label} href={menu.href} className="flex gap-2">{menu.label}</Link>
+          <Link key={`nav-${menu.label}`} href={menu.href} className="flex gap-2">{menu.label}</Link>
         ))}
       </div>
       <div>

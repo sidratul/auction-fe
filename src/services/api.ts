@@ -18,15 +18,10 @@ export interface ApiStateOption {
   shouldFetch: boolean;
 }
 
-export const getState = <T,E=unknown>(url: string, opts?: ApiStateOption) => {
-  console.log("loading", opts)
+export const get = <T,E=unknown>(url: string, opts?: ApiStateOption) => {
   return UseSWR<T, AxiosError<E>>(() => opts?.shouldFetch !== false? url : null, fetcher, {
     revalidateOnFocus: false,
   });
-}
-
-export const get = <T>(url: string) => {
-  return axios.get<T, AxiosResponse<T>>(url);
 }
 
 export const post = <T, D=unknown>(url: string, body: D) => {

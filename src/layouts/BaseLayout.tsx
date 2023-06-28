@@ -3,10 +3,9 @@ import React, { useState, createContext, ReactNode, useEffect, useContext } from
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getCookie, setCookie, removeCookie } from 'typescript-cookie';
-import { AuthToken, LoginResponse } from '@/services/auth/types';
-import { User, getMyProfile, getProfile } from '@/services/user';
-import { ApiError, setDefaultToken } from '@/services/api';
-import { ErrorResponse } from '@/services/types';
+import { LoginResponse } from '@/services/auth/types';
+import { User, getProfile } from '@/services/user';
+import { setDefaultToken } from '@/services/api';
 
 interface BaseLayoutContextProps {
   user?: User;
@@ -21,7 +20,7 @@ const COOKIE_NAME = 'userlogin';
 export const BaseLayout = ({children}: {children: ReactNode}) => {
   const [user, setUser] = useState<User>();
   const [loading, setLoading] = useState<boolean>(true);
-  const { data: userData, error } = getProfile({ shouldFetch: !!user });
+  const { data: userData, error } = getProfile( !!user );
 
   const userLogin = (loginResponse: LoginResponse) => {
     setUser(loginResponse.user);
