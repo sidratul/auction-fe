@@ -17,7 +17,7 @@ export const MobileNavigation = () => {
         onClick={()=>setActive(false)}
       >
         <div className="w-[356px] max-w-[85%]">
-          <Navigation key="navigation"/>
+          <Navigation/>
         </div>
       </div>
     </>

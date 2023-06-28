@@ -15,7 +15,7 @@ export const Navigation = () => {
     <div className="grid h-screen bg-cyan-900 text-white px-[24px] py-[40px] overflow-auto content-between">
       <div className="grid gap-6">
         {menus.map(menu => (
-          <Link key={menu.href} href={menu.href} className="flex gap-2">{menu.label}</Link>
+          <Link key={menu.label} href={menu.href} className="flex gap-2">{menu.label}</Link>
         ))}
       </div>
       <div>

@@ -3,16 +3,16 @@ import { useRouter } from 'next/navigation';
 import { useLayoutContext } from './BaseLayout';
 
 export const GuestLayout = ({children}: {children: ReactNode}) => {
-  const { token } = useLayoutContext();
+  const { user } = useLayoutContext();
   const { push } = useRouter();
 
   useEffect(()=>{
-    if(!token) {
+    if(!user) {
       return;
     }
 
     push('/');
-  },[token, push]);
+  },[user, push]);
 
   return (
     <>{children}</>

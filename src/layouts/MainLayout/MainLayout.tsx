@@ -5,22 +5,22 @@ import { MobileNavigation, Navigation } from '@/components/Navigation';
 import { BiChevronLeftCircle } from "react-icons/bi";
 
 export const MainLayout = ({children}: {children: ReactNode}) => {
-  const { token } = useLayoutContext();
+  const { user } = useLayoutContext();
   const { push, back } = useRouter();
 
   useEffect(()=>{
-    if(token){
+    if(user){
       return;
     }
 
     push('/login');
-  },[token, push]);
+  },[user, push]);
 
   return (
     <main className="bg-gray-300 min-h-screen">
       <div className="flex">
         <div className="w-[356px] hidden lg:block">
-          <Navigation key="navigation"/>
+          <Navigation/>
         </div>
         <div className="flex-1">
           <div className="flex flex-col h-screen">
