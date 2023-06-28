@@ -1,0 +1,72 @@
+@import '../../styles/colors';
+
+.btn{
+  width: 100%;
+  padding: 8px 20px 8px 20px;
+  height: 32px;
+  color: $primary-Yellow-500;
+  background-color: $white;
+  border: none;
+
+  &.medium{
+    height: 42px;
+  }
+
+  &.large{
+    height: 48px;
+  }
+
+  &:hover{
+    color: $primary-Yellow-700;
+  }
+
+  &:active{
+    color: $primary-Yellow-600;
+  }
+
+  &.disabled{
+    color: rgba(0, 0, 0, 0.2) !important;
+
+    &:hover{
+      color: rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+.primary{
+  color: $true-grey-900 !important;
+  background: $primary-Yellow-600;
+  border: 1px solid $primary-Yellow-600;
+  border-radius: 8px;
+
+  &:hover{
+    background-color: $primary-Yellow-800;
+  }
+
+  &.disabled{
+    background-color: $primary-Yellow-100;
+    border: none;
+  }
+}
+
+.secondary{
+  color: $primary-Yellow-600;
+  border-radius: 8px;
+  border: 1.5px solid $primary-Yellow-600;
+
+  &:hover{
+    background-color: $primary-Yellow-50;
+  }
+
+  &:active{
+    background-color: $primary-Yellow-100;
+  }
+
+  &.loading{
+    background-color: $primary-Yellow-50;
+  }
+}
+
+.icon{
+  margin: 0 auto;
+}
