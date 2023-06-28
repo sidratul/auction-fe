@@ -73,8 +73,6 @@ const ErrorComponent = <T extends unknown>(props: {
     name: props.name,
   });
 
-  console.log("error", error)
-
   return (
     <span role='alert' className='text-red-500 first-letter:capitalize'>{error}</span>
   )

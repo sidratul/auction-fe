@@ -29,6 +29,7 @@ export const BaseLayout = ({children}: {children: ReactNode}) => {
 
   const logout = () => {
     setToken(undefined);
+    removeCookie(COOKIE_NAME);
   }
 
   useEffect(()=> {

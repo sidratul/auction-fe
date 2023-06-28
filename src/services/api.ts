@@ -20,6 +20,6 @@ export const get = <T,E=unknown>(url: string) => {
   });
 }
 
-export const post = <T, D=unknown>(url: string, body?: D) => {
+export const post = <T, D=unknown>(url: string, body: D) => {
   return axios.post<T, AxiosResponse<T>, D>(url, body);
 }

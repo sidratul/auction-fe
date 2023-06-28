@@ -1,29 +1,48 @@
 
 import React from 'react'
-import { BaseTextInput, TextField } from '@/components'
+import { TextField, PaswordField, Button, EmailField } from '@/components'
 import * as Yup from 'yup';
 import { useLayoutContext } from '@/layouts';
 import { toast } from 'react-toastify';
 import { DynamicForm, Field, useForm, InputProps } from '@/components/DynamicForm';
+import { RegisterUserData, registerUser } from '@/services/user';
+import { ApiError } from '@/services/api';
+import { ErrorResponse } from '@/services/types';
 
-interface RegisterData {
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
 
 export const RegisterForm = () => {
   const { userLogin } = useLayoutContext();
 
-  const handleSubmit = async (values: RegisterData) => {
-    console.log("values", values);
+  const handleSubmit = async (values: RegisterUserData) => {
+    try {
+      const register = await registerUser(values);
+      userLogin(register.data);
+    } catch(err){
+      const error =  err as ApiError<ErrorResponse>;
+      let message = error.response?.data.message;
+      if(Array.isArray(message)) {
+        message = message[0];
+      }
+
+      toast.error(message);
+    }
   }
 
-  const { control } = useForm<RegisterData>({
+  const { control } = useForm<RegisterUserData>({
     fields : {
+      name: {
+        component: TextField,
+        props: (props): InputProps<typeof TextField> =>{
+          return {
+            onChange: props.onChange,
+            label: 'Name',
+            placeholder: 'Name',
+          }
+        },
+      },
       email: {
-        component: BaseTextInput,
-        props: (props): InputProps<typeof BaseTextInput> =>{
+        component: EmailField,
+        props: (props): InputProps<typeof EmailField> =>{
           return {
             onChange: props.onChange,
             label: 'Email',
@@ -32,27 +51,28 @@ export const RegisterForm = () => {
         },
       },
       password: {
-        label: 'Password',
-        component: TextField,
-        props: ({ onChange }): InputProps<typeof TextField> => {
+        component: PaswordField,
+        props: ({ onChange }): InputProps<typeof PaswordField> => {
           return {
             onChange,
+            label: 'Password',
             placeholder: 'Password',
           }
         }
       },
       confirmPassword: {
-        label: 'Email',
-        component: TextField,
-        props: (props): InputProps<typeof TextField> => {
+        component: PaswordField,
+        props: ({ onChange }): InputProps<typeof PaswordField> => {
           return {
-            ...props,
+            onChange,
+            label: 'Confirm Password',
             placeholder: 'Confirm Password',
           }
         }
       },
     },
     validations: Yup.object({
+      name: Yup.string().required(),
       email: Yup.string().required().email(),
       password: Yup.string().required().min(6),
       confirmPassword: Yup.string().required().oneOf([Yup.ref('password')], 'Passwords do not match'),
@@ -60,13 +80,16 @@ export const RegisterForm = () => {
   });
 
   return (
-    <>
+    <div className='grid gap-3'>
       <DynamicForm
         control={control}
         onSubmit={handleSubmit}
       />
-      <button onClick={()=>control.submit()}>submit</button>
-    </>
+      <Button
+        style='primary'
+        onClick={()=>control.submit()}
+      >Submit</Button>
+    </div>
 
   )
 }

@@ -1,6 +1,5 @@
-import React, { ButtonHTMLAttributes } from 'react'
+import React, { ButtonHTMLAttributes, ReactNode } from 'react'
 import styles from './Button.module.scss';
-import { Icon } from '../Icon';
 
 interface ButtonProps extends Pick<ButtonHTMLAttributes<HTMLButtonElement>, 'type' | 'onClick'>{
   label: string;
@@ -8,16 +7,11 @@ interface ButtonProps extends Pick<ButtonHTMLAttributes<HTMLButtonElement>, 'typ
   size?: 'large' | 'medium' | 'small';
   loading?: boolean;
   disabled?: boolean;
+  children: ReactNode;
 }
 
 export const Button = (props: ButtonProps) => {
-  const {style, label, loading, disabled, size, ...other} = props;
-  let width = 16;
-  let height = 20;
-  if (size !== 'large') {
-    width = 10.67;
-    height = 13.33;
-  }
+  const {style, label, loading, disabled, size, children,...other} = props;
 
   return (
     <button
@@ -29,10 +23,7 @@ export const Button = (props: ButtonProps) => {
         ${disabled && styles.disabled}
       `}
       {...other}
-    >{!loading ? label : (
-        <Icon icon='Hourglass' height={height} width={width} className={styles.icon}/>
-      )}
-    </button>
+    >{children}</button>
   )
 }
 

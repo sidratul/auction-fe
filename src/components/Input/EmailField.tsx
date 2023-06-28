@@ -1,12 +1,13 @@
 import React, { InputHTMLAttributes } from 'react'
 import { BaseTextInput, BaseTextInputProps } from './BaseTextInput';
+import { TextFieldProps } from './TextField';
 
-export interface TextFieldProps extends Omit<BaseTextInputProps, 'type'>  {}
+type EmailFieldProps = TextFieldProps;
 
-export const TextField = (props: TextFieldProps) => {
+export const EmailField = (props: EmailFieldProps) => {
   return (
     <BaseTextInput
-      type='text'
+      type='email'
       {...props}
     />
   )
