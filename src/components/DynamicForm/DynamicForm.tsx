@@ -56,6 +56,7 @@ const InputComponent = <T extends unknown>(props: {
     name: props.name,
   });
 
+  /** TODO: create as state. so we can add errors and can reset form*/
   const componentProps = props.field.props(props.control.getComponentProps(props.name));
 
   return (

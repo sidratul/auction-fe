@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useState } from 'react'
 import { TextField, PaswordField, Button, EmailField } from '@/components'
 import * as Yup from 'yup';
 import { useLayoutContext } from '@/layouts';
@@ -12,8 +12,10 @@ import { login } from '@/services/auth';
 
 export const LoginForm = () => {
   const { userLogin } = useLayoutContext();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (values: LoginData) => {
+    setLoading(true);
     try {
       const register = await login(values);
       userLogin(register.data);
@@ -25,6 +27,8 @@ export const LoginForm = () => {
       }
 
       toast.error(message);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -64,6 +68,7 @@ export const LoginForm = () => {
         onSubmit={handleSubmit}
       />
       <Button
+        disabled={loading}
         style='primary'
         onClick={()=>control.submit()}
       >Submit</Button>

@@ -4,3 +4,7 @@ export interface Balance {
   createdAt: string
   updateAt: string
 }
+
+export interface Deposit {
+  amount: number;
+}

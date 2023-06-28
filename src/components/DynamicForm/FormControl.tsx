@@ -61,7 +61,6 @@ export class FormControl<T> {
   }
 
   setErrorField(name: keyof T, error: string | undefined) {
-    console.log("this.setErrorObj", this.setErrorObj)
     this.setErrorObj[name] && this.setErrorObj[name](error);
   }
 
