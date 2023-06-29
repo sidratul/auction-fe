@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, useState } from 'react'
+import React, { InputHTMLAttributes, useRef, useState } from 'react'
 import styles from './BaseTextInput.module.scss';
 // import { Icon } from '@/components/Icon';
 
@@ -6,10 +6,11 @@ export interface BaseTextInputProps extends Pick<InputHTMLAttributes<HTMLInputEl
   label?: string;
   error?: string;
   info?: string
+  innerRef?: React.RefObject<HTMLInputElement>;
 }
 
 export const BaseTextInput = (props: BaseTextInputProps) => {
-  const { id, label, error, type, info, ...others} = props;
+  const { id, label, error, type, info, innerRef, ...others} = props;
   const isPassword = props.type === 'password';
   const [view, setView]= useState(!isPassword);
   const passStyle = isPassword && !view ? styles.password : '';
@@ -18,6 +19,7 @@ export const BaseTextInput = (props: BaseTextInputProps) => {
     <div className={`${styles.root} ${error && styles['error']} ${passStyle}`}>
       <label className={styles.label} htmlFor={id}> {label}</label>
       <input
+        ref={innerRef}
         id={id}
         type={isPassword? 'text' : type}
         className={`${styles.input}`}

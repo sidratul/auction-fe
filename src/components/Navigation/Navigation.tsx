@@ -2,12 +2,16 @@ import React from 'react';
 import { Button } from '../Button';
 import Link from 'next/link';
 
-
+/** TODO: create as props */
 const menus = [
   {
     label: 'Deposit',
     href: '/deposit'
-  }
+  },
+  {
+    label: 'Items',
+    href: '/items'
+  },
 ];
 
 export const Navigation = () => {

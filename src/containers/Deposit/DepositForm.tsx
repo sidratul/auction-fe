@@ -34,7 +34,7 @@ export const DepositForm = () => {
     fields : {
       amount: {
         component: NumberField,
-        props: ({onChange, name}): InputProps<typeof EmailField> =>{
+        props: ({onChange, name}): InputProps<typeof NumberField> =>{
           return {
             onChange: onChange,
             label: name,
