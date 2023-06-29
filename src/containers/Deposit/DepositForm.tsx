@@ -2,22 +2,21 @@
 import React, { useState } from 'react'
 import { Button, EmailField, NumberField } from '@/components'
 import * as Yup from 'yup';
-import { useMainLayoutContext } from '@/layouts';
 import { toast } from 'react-toastify';
 import { DynamicForm , useForm, InputProps } from '@/components/DynamicForm';
 import { ApiError } from '@/services/api';
 import { ErrorResponse } from '@/services/types';
-import { Deposit, deposit } from '@/services/balance';
+import { Deposit, deposit, reloadBalance } from '@/services/balance';
 
 export const DepositForm = () => {
   const [loading, setLoading] = useState(false);
-  const { reloadBalance } = useMainLayoutContext();
+  const { trigger } = reloadBalance();
 
   const handleSubmit = async (values: Deposit) => {
     setLoading(true);
     try {
       await deposit(values);
-      reloadBalance();
+      trigger();
     } catch(err){
       const error = err as ApiError<ErrorResponse>;
       let message = error.response?.data.message;
