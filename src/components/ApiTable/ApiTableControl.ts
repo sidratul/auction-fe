@@ -64,7 +64,6 @@ export class ApiTableControl<T, P> {
     if (typeof column.value !== "function") {
       return data[column.value] as unknown as ReactNode;
     }
-
     return column.value(data)
   }
 

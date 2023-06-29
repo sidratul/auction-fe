@@ -1,6 +1,6 @@
 export interface Balance {
   id: string
-  amount: string
+  amount: number
   createdAt: string
   updateAt: string
 }

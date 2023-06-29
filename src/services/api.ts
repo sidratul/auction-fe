@@ -32,3 +32,7 @@ export const mutation = (url: string) => {
 export const post = <T, D=unknown>(url: string, body: D) => {
   return axios.post<T, AxiosResponse<T>, D>(url, body);
 }
+
+export const patch = <T, D=unknown>(url: string, body?: D) => {
+  return axios.patch<T, AxiosResponse<T>, D>(url, body);
+}

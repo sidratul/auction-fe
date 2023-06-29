@@ -1,6 +1,8 @@
 import React from 'react'
 import { ApiTable, ApiTableControl, ApiTableControlProps } from '@/components/ApiTable'
 import { ITEM_API_URL, Item, ItemListParam } from '@/services/item';
+import { BidAction } from './Actions/BidAction';
+import { PublishAction } from './Actions/PublishAction';
 
 const tableProps: ApiTableControlProps<Item> = {
   columns: [
@@ -12,7 +14,7 @@ const tableProps: ApiTableControlProps<Item> = {
     {
       label: "Current Price",
       value(item){
-        let price = item.startPrice;
+        const price = item.__highestBid__?.price || item.startPrice;
         return `$${price}`;
       },
     },
@@ -25,15 +27,16 @@ const tableProps: ApiTableControlProps<Item> = {
     },
     {
       label: "Action",
-      value: (data) => (
+      value: (item) => (
         <>
-          <div>Bid</div>
+          <BidAction item={item}/>
+          <PublishAction item={item}/>
         </>
       ),
     },
   ],
   url: ITEM_API_URL,
-  orderBy: "endDate",
+  orderBy: "createdAt",
   orderType: "DESC",
 };
 

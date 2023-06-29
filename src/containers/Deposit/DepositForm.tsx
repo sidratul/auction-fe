@@ -17,6 +17,7 @@ export const DepositForm = () => {
     try {
       await deposit(values);
       trigger();
+      toast.success(`Deposit succeed!`);
     } catch(err){
       const error = err as ApiError<ErrorResponse>;
       let message = error.response?.data.message;
