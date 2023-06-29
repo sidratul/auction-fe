@@ -15,3 +15,9 @@ export interface Item {
   createdAt: string
   updateAt: string
 }
+
+export interface ItemListParam {
+  page: string;
+  limit: string;
+  status: string[];
+}
