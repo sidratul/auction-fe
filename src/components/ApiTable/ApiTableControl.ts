@@ -15,7 +15,7 @@ export interface DefaultParams<T>{
   limit: 10,
 }
 
-export type QueryParams<T, P> = DefaultParams<T> & P;
+export type QueryParams<T, P> = DefaultParams<T> & P & T;
 
 export interface ApiTableControlProps<T> {
   columns: Column<T>[];
@@ -77,8 +77,15 @@ export class ApiTableControl<T, P> {
     return `${key}-${column.label}`;
   }
 
-  filter(name: string, value: any) {
+  filter(name: keyof T, value: string | string[] | undefined) {
     this.setParams((prev) => {
+      if(!value) {
+        delete prev[name];
+        return {
+          ...prev,
+        }
+      }
+
       return {
         ...prev,
         [name]: value,
