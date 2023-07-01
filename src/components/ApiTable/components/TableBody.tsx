@@ -11,6 +11,7 @@ export const TableBody = <T extends unknown, P extends unknown>() => {
 
   return (
     <tbody>
+
       { isLoading ? (
         <tr>
           <td colSpan={control.getTotalColumn()} style={{ textAlign:'center' }}>
@@ -21,6 +22,11 @@ export const TableBody = <T extends unknown, P extends unknown>() => {
         data.data.map((row, index) => (
           <TableRow key={control.getKey(row)} data={row} index={index} />
         ))
+      )}
+
+      {data?.data.length === 0 && (
+        /** TODO. using table cell */
+        <div>No Data</div>
       )}
     </tbody>
   )

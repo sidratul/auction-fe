@@ -14,14 +14,17 @@ export const TableRow = <T extends unknown>(props: TableRowProps<T>) => {
     <tr>
       {
         control.numbering && (
-          <td>
-            {(control.params.page-1) * control.params.limit + index + 1}
+          <td className='border px-4 py-2 border-slate-300'>
+            {(control.params[control.pageName!]-1) * control.params[control.limitName!] + index + 1}
           </td>
         )
       }
       {
         control.getColumns().map(column => (
-          <td key={control.getColumnKey(data, column )}>{control.getValue(data, column)}</td>
+          <td
+            className='border px-4 py-2 border-slate-300'
+            key={control.getColumnKey(data, column )}
+          >{control.getValue(data, column)}</td>
         ))
       }
     </tr>

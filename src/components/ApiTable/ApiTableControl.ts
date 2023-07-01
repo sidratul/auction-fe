@@ -8,21 +8,19 @@ interface Column<T> {
 
 type OrderType = "ASC" | "DESC";
 
-export interface DefaultParams<T>{
-  orderBy: keyof T,
-  orderType: OrderType,
-  page: 1,
-  limit: 10,
-}
+export type QueryParams<P> = Partial<P>;
 
-export type QueryParams<T, P> = DefaultParams<T> & P & T;
-
-export interface ApiTableControlProps<T> {
+export interface ApiTableControlProps<T,P> {
   columns: Column<T>[];
   url: string,
   numbering?: boolean;
   orderType?: OrderType,
   orderBy?: keyof T,
+  default?: Partial<P>,
+  limitName?: keyof P,
+  orderByName?: keyof P,
+  orderTypeName?: keyof P,
+  pageName?: keyof P,
 }
 
 export class ApiTableControl<T, P> {
@@ -30,22 +28,32 @@ export class ApiTableControl<T, P> {
   private keyName: string = "id";
   url: string = "";
   numbering?: boolean = true;
-  orderType: OrderType = "DESC";
-  orderBy?: keyof T;
-  params: QueryParams<T,P> = {} as QueryParams<T,P>;
-  setParams: React.Dispatch<React.SetStateAction<QueryParams<T,P>>> = () => {} ;
+  limitName?: keyof P;
+  orderByName?: keyof P;
+  orderTypeName?: keyof P;
+  pageName?: keyof P;
+  defaultParams: QueryParams<P>;
+  params: QueryParams<P> = {} as QueryParams<P>;
+  setParams: React.Dispatch<React.SetStateAction<QueryParams<P>>> = () => {} ;
   refreshFunction: ()=> void = () => {};
 
-  constructor (props: ApiTableControlProps<T>) {
+  constructor (props: ApiTableControlProps<T,P>) {
     this.columns = props.columns
     this.url = props.url;
     this.numbering = props.numbering;
-    if(props.orderBy) {
-      this.orderBy = props.orderBy;
-    }
-    if(props.orderType) {
-      this.orderType = props.orderType;
-    }
+
+    this.limitName = props.limitName || "limit" as keyof P;
+    this.pageName = props.orderTypeName || "page" as keyof P;
+    this.orderByName = props.pageName || "orderBy" as keyof P;
+    this.orderTypeName = props.orderByName || "orderType" as keyof P;
+
+    this.defaultParams = {
+      [this.pageName]: 1,
+      [this.limitName]: 10,
+      [this.orderByName]: "id",
+      [this.orderTypeName]: "DESC",
+      ...props.default,
+    } as  QueryParams<P>;
   }
 
   getColumns() {
@@ -77,7 +85,7 @@ export class ApiTableControl<T, P> {
     return `${key}-${column.label}`;
   }
 
-  filter(name: keyof T, value: string | string[] | undefined) {
+  filter(name: keyof P, value: string | string[] | undefined) {
     this.setParams((prev) => {
       if(!value) {
         delete prev[name];
@@ -93,15 +101,13 @@ export class ApiTableControl<T, P> {
     });
   }
 
-  handleSort(by: string, type: OrderType) {
-    this.orderBy = by as keyof T;
-    this.orderType = type;
+  handleSort(by: keyof T, type: OrderType) {
     this.setParams((prev) => {
       return {
         ...prev,
         ...{
-          orderBy: by,
-          orderType: type,
+          [this.orderByName!]: by,
+          [this.orderTypeName!]: type,
         }
       }
     });

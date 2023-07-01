@@ -4,7 +4,7 @@ import { ITEM_API_URL, Item, ItemListParam, ItemStatus } from '@/services/item';
 import { BidAction } from './Actions/BidAction';
 import { PublishAction } from './Actions/PublishAction';
 
-const tableProps: ApiTableControlProps<Item> = {
+const tableProps: ApiTableControlProps<Item, ItemListParam> = {
   columns: [
     {
       label: "Nama",
@@ -36,8 +36,11 @@ const tableProps: ApiTableControlProps<Item> = {
     },
   ],
   url: ITEM_API_URL,
-  orderBy: "createdAt",
-  orderType: "DESC",
+  default: {
+    orderBy: "createdAt",
+    orderType: "DESC",
+    limit: 1,
+  }
 };
 
 export const ItemContainer = () => {
@@ -45,7 +48,6 @@ export const ItemContainer = () => {
 
   const filterStatus = (statuses: ItemStatus[] | undefined) => {
     control.filter('status', statuses);
-
   }
 
   return (

@@ -2,6 +2,7 @@ import React, { useContext, createContext, useState } from 'react'
 import { ApiTableControl, QueryParams } from './ApiTableControl'
 import { TableHead } from './components/TableHead';
 import { TableBody } from './components/TableBody';
+import { TablePagination } from './components/TablePagination';
 
 interface ApiTableProps<T,P> {
   control: ApiTableControl<T,P>;
@@ -18,14 +19,7 @@ export const useApiTableContext = <T extends unknown = unknown, P = unknown>() =
 }
 
 export const ApiTable = <T extends unknown, P extends unknown>({control}: ApiTableProps<T, P>) => {
-  const defaulParams = {
-    limit: 10,
-    page: 1,
-    orderBy: control.orderBy,
-    orderType: control.orderType,
-  } as QueryParams<T,P>;
-
-  const [ params, setParams] = useState<QueryParams<T,P>>(defaulParams);
+  const [ params, setParams] = useState<QueryParams<P>>(control.defaultParams);
   control.setParams = setParams;
   control.params = params;
 
@@ -35,10 +29,13 @@ export const ApiTable = <T extends unknown, P extends unknown>({control}: ApiTab
         control,
       }}
     >
-      <table>
-        <TableHead/>
-        <TableBody/>
-      </table>
+      <div className="relative overflow-x-auto">
+        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <TableHead/>
+          <TableBody/>
+        </table>
+      </div>
+      <TablePagination/>
     </TableContext.Provider>
   )
 }

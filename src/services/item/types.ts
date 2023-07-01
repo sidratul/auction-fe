@@ -26,7 +26,9 @@ export interface Item {
 }
 
 export interface ItemListParam {
-  page: string;
-  limit: string;
+  page: number;
+  limit: number;
   status: string[];
+  orderBy: keyof Item;
+  orderType: "ASC" | "DESC";
 }
