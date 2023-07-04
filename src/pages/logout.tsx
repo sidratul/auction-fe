@@ -3,7 +3,7 @@ import { useLayoutContext } from '@/layouts';
 import { useRouter } from 'next/router';
 
 export default function Logout(){
-  const { logout, token } = useLayoutContext();
+  const { logout, user } = useLayoutContext();
   const { push } = useRouter();
 
   useEffect(() => {
@@ -11,10 +11,10 @@ export default function Logout(){
   }, [logout]);
 
   useEffect(() => {
-    if(!token){
+    if(!user){
       push('/login');
     }
-  }, [token, push]);
+  }, [user, push]);
 
   return (
     <></>

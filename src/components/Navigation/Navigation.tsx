@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from '../Button';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 /** TODO: create as props */
 const menus = [
@@ -15,6 +16,7 @@ const menus = [
 ];
 
 export const Navigation = () => {
+  const { push } = useRouter();
   return (
     <div className="grid h-screen bg-cyan-900 text-white px-[24px] py-[40px] overflow-auto content-between">
       <div className="grid gap-6">
@@ -24,7 +26,9 @@ export const Navigation = () => {
       </div>
       <div>
         <div className="grid gap-6">
-          <Button><span className="text-black font-medium">Logout</span></Button>
+          <Button
+            onClick={()=>push(`/logout`)}
+          ><span className="text-black font-medium">Logout</span></Button>
         </div>
       </div>
     </div>
